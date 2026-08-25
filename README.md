@@ -27,7 +27,14 @@ Editá [src/config/productos.js](src/config/productos.js) con la lista real de p
 
 Editá [src/config/config.js](src/config/config.js) y poné el número (con código de país, sin `+`, sin espacios) en `NUMERO_IMPRESION`.
 
-### 4. Publicar en GitHub Pages
+### 4. PIN del panel de administración
+
+En el mismo archivo, cambiá `ADMIN_PIN` por un PIN propio (no dejes `1234`). Es
+el que vas a compartir con quien vea el panel (ver más abajo). No es una
+seguridad fuerte (cualquiera que mire el código fuente lo puede ver), pero
+evita que alguien entre por accidente al link.
+
+### 5. Publicar en GitHub Pages
 
 1. En GitHub, andá a **Settings > Pages** y elegí como *Source* la opción **GitHub Actions**.
 2. Hacé `git push` a `main`. El workflow [.github/workflows/deploy.yml](.github/workflows/deploy.yml) compila y publica solo.
@@ -50,3 +57,15 @@ npm run dev
   WhatsApp para reenviarlo manualmente).
 - Al iniciar una nueva jornada se empieza de cero, sin perder el historial
   anterior (queda guardado en Firestore, visible desde la consola de Firebase).
+
+## Panel de administración
+
+En `https://juanchoa07-design.github.io/RegistroVentas/?admin=1` hay un panel
+que muestra, en vivo, todas las jornadas ya finalizadas de cualquier reparto
+(fecha, nombre y total), con un botón para descargar o compartir el PDF de
+cada una. Pide el PIN configurado en `ADMIN_PIN` la primera vez y después lo
+recuerda en ese navegador.
+
+Está pensado para no depender de que el PDF llegue por WhatsApp: los datos ya
+están guardados apenas se cargan, así que quien tenga el link + PIN puede
+entrar cuando quiera y ver todo, sin que nadie tenga que "enviar" nada.
