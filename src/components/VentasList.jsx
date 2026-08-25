@@ -11,12 +11,16 @@ export default function VentasList({ ventas, onEliminar }) {
         <li key={v.id} className="item-venta">
           <div className="item-venta-info">
             <strong>{v.cliente}</strong>
-            <span>
-              {v.producto} · x{v.cantidad}
-            </span>
+            <ul className="detalle-productos">
+              {v.items.map((it, idx) => (
+                <li key={idx}>
+                  {it.producto} · x{it.cantidad} — ${formatearMoneda(it.precioFinal)}
+                </li>
+              ))}
+            </ul>
           </div>
           <div className="item-venta-precio">
-            <span>${formatearMoneda(v.precioFinal)}</span>
+            <span>${formatearMoneda(v.total)}</span>
             <button
               type="button"
               className="boton-eliminar"

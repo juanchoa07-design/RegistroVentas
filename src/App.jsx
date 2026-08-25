@@ -16,7 +16,7 @@ export default function App() {
   const [resumen, setResumen] = useState(null) // { jornada, ventas, total }
   const [estadoEnvio, setEstadoEnvio] = useState('')
 
-  const total = useMemo(() => ventas.reduce((acc, v) => acc + v.precioFinal, 0), [ventas])
+  const total = useMemo(() => ventas.reduce((acc, v) => acc + v.total, 0), [ventas])
 
   async function handleFinalizar() {
     if (ventas.length === 0) {

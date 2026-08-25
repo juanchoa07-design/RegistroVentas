@@ -128,7 +128,8 @@
 .item-venta {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
+  gap: 12px;
   padding: 10px 0;
   border-bottom: 1px solid var(--border);
 }
@@ -142,7 +143,10 @@
   flex-direction: column;
 }
 
-.item-venta-info span {
+.detalle-productos {
+  list-style: none;
+  margin: 4px 0 0;
+  padding: 0;
   font-size: 13px;
   opacity: 0.75;
 }
@@ -153,6 +157,34 @@
   gap: 10px;
   font-weight: 600;
   color: var(--text-h);
+  flex-shrink: 0;
+}
+
+.lista-items-borrador {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+}
+
+.lista-items-borrador li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px dashed var(--border);
+}
+
+.lista-items-borrador-precio {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+}
+
+.subtotal-borrador {
+  font-size: 14px;
+  text-align: right;
 }
 
 .boton-eliminar {
