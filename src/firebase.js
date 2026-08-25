@@ -7,12 +7,12 @@ import { getAuth, signInAnonymously, onAuthStateChanged } from 'firebase/auth'
 // Reemplazalos por los datos de TU proyecto: Firebase Console > Configuración
 // del proyecto > Tus apps > Configuración del SDK.
 const firebaseConfig = {
-  apiKey: 'TU_API_KEY',
-  authDomain: 'TU_PROYECTO.firebaseapp.com',
-  projectId: 'TU_PROYECTO',
-  storageBucket: 'TU_PROYECTO.appspot.com',
-  messagingSenderId: 'TU_SENDER_ID',
-  appId: 'TU_APP_ID',
+  apiKey: 'AIzaSyDbCKmqrQILDlGi2JImw2GcQzFwGY-FVZI',
+  authDomain: 'registroventas-a667e.firebaseapp.com',
+  projectId: 'registroventas-a667e',
+  storageBucket: 'registroventas-a667e.firebasestorage.app',
+  messagingSenderId: '405555596880',
+  appId: '1:405555596880:web:3f2aedd3f2474f29e6cb55',
 }
 
 const app = initializeApp(firebaseConfig)
