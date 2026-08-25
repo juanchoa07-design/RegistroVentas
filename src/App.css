@@ -1,0 +1,216 @@
+.pantalla-centrada {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.tarjeta {
+  width: 100%;
+  max-width: 480px;
+  background: var(--tarjeta-bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+  margin: 0 auto 16px;
+}
+
+.tarjeta > * + * {
+  margin-top: 12px;
+}
+
+.subtexto {
+  color: var(--text);
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+.centrado {
+  text-align: center;
+  display: block;
+  padding: 12px 0;
+}
+
+.boton-primario,
+.boton-secundario {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.boton-primario {
+  background: var(--accent);
+  color: white;
+}
+
+.boton-primario:hover:not(:disabled) {
+  background: var(--accent-h);
+}
+
+.boton-secundario {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-h);
+}
+
+.boton-primario:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.fila-campos {
+  display: flex;
+  gap: 12px;
+}
+
+.campo {
+  flex: 1;
+}
+
+.campo-chico {
+  flex: 0 0 90px;
+}
+
+.contenedor-app {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  max-width: 640px;
+  width: 100%;
+  margin: 0 auto;
+  padding-bottom: 84px;
+}
+
+.encabezado {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  background: var(--bg);
+  z-index: 5;
+}
+
+.total-barra {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+}
+
+.total-barra span {
+  font-size: 12px;
+  color: var(--text);
+  opacity: 0.7;
+}
+
+.total-barra strong {
+  font-size: 22px;
+  color: var(--text-h);
+}
+
+.contenido {
+  padding: 16px;
+}
+
+.lista-ventas {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.item-venta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.item-venta:last-child {
+  border-bottom: none;
+}
+
+.item-venta-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.item-venta-info span {
+  font-size: 13px;
+  opacity: 0.75;
+}
+
+.item-venta-precio {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.boton-eliminar {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+  padding: 4px;
+}
+
+.pie {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+}
+
+.boton-finalizar {
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+  display: block;
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: none;
+  background: var(--peligro);
+  color: white;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.boton-finalizar:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.total-final {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text-h);
+}
+
+.mensaje-estado {
+  font-size: 13px;
+  color: var(--accent-h);
+}
+
+.enlace-whatsapp {
+  display: inline-block;
+  color: var(--accent-h);
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid var(--border);
+  padding: 10px 16px;
+  border-radius: 10px;
+}
