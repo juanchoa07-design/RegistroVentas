@@ -20,7 +20,7 @@ export default function VentasList({ ventas, onEliminar }) {
             <ul className="detalle-productos">
               {(v.items ?? []).map((it, idx) => (
                 <li key={idx}>
-                  {it.producto} · x{it.cantidad} — ${formatearMoneda(it.precioFinal)}
+                  {it.producto} · x{it.cantidad}
                 </li>
               ))}
             </ul>

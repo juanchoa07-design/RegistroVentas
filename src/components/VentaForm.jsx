@@ -1,16 +1,14 @@
 import { useState } from 'react'
 import { CATEGORIAS_PRODUCTOS } from '../config/productos'
-import { formatearMoneda } from '../lib/format'
 
-const itemVacio = { producto: '', cantidad: 1, precioFinal: '' }
+const itemVacio = { producto: '', cantidad: 1 }
 
 export default function VentaForm({ onAgregar }) {
   const [cliente, setCliente] = useState('')
   const [items, setItems] = useState([])
   const [itemDraft, setItemDraft] = useState(itemVacio)
+  const [precioVenta, setPrecioVenta] = useState('')
   const [guardando, setGuardando] = useState(false)
-
-  const totalVenta = items.reduce((acc, i) => acc + i.precioFinal, 0)
 
   function actualizarItem(campo, valor) {
     setItemDraft((f) => ({ ...f, [campo]: valor }))
@@ -19,10 +17,9 @@ export default function VentaForm({ onAgregar }) {
   function handleAgregarItem(e) {
     e.preventDefault()
     const cantidad = Number(itemDraft.cantidad)
-    const precioFinal = Number(itemDraft.precioFinal)
-    if (!itemDraft.producto || !cantidad || precioFinal <= 0) return
+    if (!itemDraft.producto || !cantidad) return
 
-    setItems((prev) => [...prev, { ...itemDraft, cantidad, precioFinal, key: crypto.randomUUID() }])
+    setItems((prev) => [...prev, { producto: itemDraft.producto, cantidad, key: crypto.randomUUID() }])
     setItemDraft(itemVacio)
   }
 
@@ -31,17 +28,19 @@ export default function VentaForm({ onAgregar }) {
   }
 
   async function handleGuardarVenta() {
-    if (!cliente.trim() || items.length === 0) return
+    const total = Number(precioVenta)
+    if (!cliente.trim() || items.length === 0 || !total || total <= 0) return
     setGuardando(true)
     try {
       await onAgregar({
         cliente: cliente.trim(),
-        items: items.map(({ producto, cantidad, precioFinal }) => ({ producto, cantidad, precioFinal })),
-        total: totalVenta,
+        items: items.map(({ producto, cantidad }) => ({ producto, cantidad })),
+        total,
       })
       setCliente('')
       setItems([])
       setItemDraft(itemVacio)
+      setPrecioVenta('')
     } finally {
       setGuardando(false)
     }
@@ -68,17 +67,14 @@ export default function VentaForm({ onAgregar }) {
               <span>
                 {it.producto} · x{it.cantidad}
               </span>
-              <span className="lista-items-borrador-precio">
-                ${formatearMoneda(it.precioFinal)}
-                <button
-                  type="button"
-                  className="boton-eliminar"
-                  aria-label={`Quitar ${it.producto}`}
-                  onClick={() => quitarItem(it.key)}
-                >
-                  🗑
-                </button>
-              </span>
+              <button
+                type="button"
+                className="boton-eliminar"
+                aria-label={`Quitar ${it.producto}`}
+                onClick={() => quitarItem(it.key)}
+              >
+                🗑
+              </button>
             </li>
           ))}
         </ul>
@@ -107,8 +103,6 @@ export default function VentaForm({ onAgregar }) {
               ))}
             </select>
           </div>
-        </div>
-        <div className="fila-campos">
           <div className="campo campo-chico">
             <label htmlFor="cantidad">Cantidad</label>
             <input
@@ -120,18 +114,6 @@ export default function VentaForm({ onAgregar }) {
               onChange={(e) => actualizarItem('cantidad', e.target.value)}
             />
           </div>
-          <div className="campo">
-            <label htmlFor="precioFinal">Precio final ($)</label>
-            <input
-              id="precioFinal"
-              type="number"
-              min="0"
-              step="0.01"
-              placeholder="0.00"
-              value={itemDraft.precioFinal}
-              onChange={(e) => actualizarItem('precioFinal', e.target.value)}
-            />
-          </div>
         </div>
         <button type="submit" className="boton-secundario">
           + Agregar producto a la venta
@@ -139,15 +121,24 @@ export default function VentaForm({ onAgregar }) {
       </form>
 
       {items.length > 0 && (
-        <p className="subtotal-borrador">
-          Total de esta venta: <strong>${formatearMoneda(totalVenta)}</strong>
-        </p>
+        <div className="campo">
+          <label htmlFor="precioVenta">Precio final de la venta ($)</label>
+          <input
+            id="precioVenta"
+            type="number"
+            min="0"
+            step="0.01"
+            placeholder="0.00"
+            value={precioVenta}
+            onChange={(e) => setPrecioVenta(e.target.value)}
+          />
+        </div>
       )}
 
       <button
         type="button"
         className="boton-primario"
-        disabled={guardando || !cliente.trim() || items.length === 0}
+        disabled={guardando || !cliente.trim() || items.length === 0 || !Number(precioVenta)}
         onClick={handleGuardarVenta}
       >
         {guardando ? 'Guardando…' : 'Guardar venta'}

@@ -191,18 +191,6 @@
   border-bottom: 1px dashed var(--border);
 }
 
-.lista-items-borrador-precio {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 600;
-}
-
-.subtotal-borrador {
-  font-size: 14px;
-  text-align: right;
-}
-
 .boton-eliminar {
   background: transparent;
   border: none;

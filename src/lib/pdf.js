@@ -21,7 +21,7 @@ export function generarPDF(jornada, ventas) {
     head: [['Cliente', 'Productos', 'Total venta']],
     body: ventas.map((v) => [
       v.cliente,
-      (v.items ?? []).map((i) => `${i.producto} x${i.cantidad} - $${formatearMoneda(i.precioFinal)}`).join('\n'),
+      (v.items ?? []).map((i) => `${i.producto} x${i.cantidad}`).join('\n'),
       `$${formatearMoneda(v.total ?? 0)}`,
     ]),
     foot: [['', 'TOTAL GENERAL', `$${formatearMoneda(total)}`]],
@@ -30,19 +30,16 @@ export function generarPDF(jornada, ventas) {
     footStyles: { fillColor: [226, 232, 240], textColor: [15, 23, 42], fontStyle: 'bold' },
   })
 
-  const resumenPorProducto = {}
+  const cantidadPorProducto = {}
   ventas.forEach((v) => {
     ;(v.items ?? []).forEach((it) => {
-      const acc = resumenPorProducto[it.producto] ?? { cantidad: 0, total: 0 }
-      acc.cantidad += it.cantidad
-      acc.total += it.precioFinal
-      resumenPorProducto[it.producto] = acc
+      cantidadPorProducto[it.producto] = (cantidadPorProducto[it.producto] ?? 0) + it.cantidad
     })
   })
 
-  const filasResumen = Object.entries(resumenPorProducto)
+  const filasResumen = Object.entries(cantidadPorProducto)
     .sort((a, b) => a[0].localeCompare(b[0]))
-    .map(([producto, r]) => [producto, String(r.cantidad), `$${formatearMoneda(r.total)}`])
+    .map(([producto, cantidad]) => [producto, String(cantidad)])
 
   if (filasResumen.length > 0) {
     const resumenY = doc.lastAutoTable.finalY + 12
@@ -51,12 +48,10 @@ export function generarPDF(jornada, ventas) {
 
     autoTable(doc, {
       startY: resumenY + 4,
-      head: [['Producto', 'Cantidad', 'Total']],
+      head: [['Producto', 'Cantidad']],
       body: filasResumen,
-      foot: [['', 'TOTAL GENERAL', `$${formatearMoneda(total)}`]],
       theme: 'grid',
       headStyles: { fillColor: [30, 41, 59] },
-      footStyles: { fillColor: [226, 232, 240], textColor: [15, 23, 42], fontStyle: 'bold' },
     })
   }
 
