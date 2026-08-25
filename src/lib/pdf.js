@@ -30,6 +30,36 @@ export function generarPDF(jornada, ventas) {
     footStyles: { fillColor: [226, 232, 240], textColor: [15, 23, 42], fontStyle: 'bold' },
   })
 
+  const resumenPorProducto = {}
+  ventas.forEach((v) => {
+    ;(v.items ?? []).forEach((it) => {
+      const acc = resumenPorProducto[it.producto] ?? { cantidad: 0, total: 0 }
+      acc.cantidad += it.cantidad
+      acc.total += it.precioFinal
+      resumenPorProducto[it.producto] = acc
+    })
+  })
+
+  const filasResumen = Object.entries(resumenPorProducto)
+    .sort((a, b) => a[0].localeCompare(b[0]))
+    .map(([producto, r]) => [producto, String(r.cantidad), `$${formatearMoneda(r.total)}`])
+
+  if (filasResumen.length > 0) {
+    const resumenY = doc.lastAutoTable.finalY + 12
+    doc.setFontSize(13)
+    doc.text('Resumen por producto', 14, resumenY)
+
+    autoTable(doc, {
+      startY: resumenY + 4,
+      head: [['Producto', 'Cantidad', 'Total']],
+      body: filasResumen,
+      foot: [['', 'TOTAL GENERAL', `$${formatearMoneda(total)}`]],
+      theme: 'grid',
+      headStyles: { fillColor: [30, 41, 59] },
+      footStyles: { fillColor: [226, 232, 240], textColor: [15, 23, 42], fontStyle: 'bold' },
+    })
+  }
+
   return doc
 }
 
