@@ -6,7 +6,7 @@ export default function VentasList({ ventas, onEliminar }) {
   }
 
   function confirmarEliminar(v) {
-    if (window.confirm(`¿Eliminar la venta de ${v.cliente} por $${formatearMoneda(v.total)}? No se puede deshacer.`)) {
+    if (window.confirm(`¿Eliminar la venta de ${v.cliente} por $${formatearMoneda(v.total ?? 0)}? No se puede deshacer.`)) {
       onEliminar(v.id)
     }
   }
@@ -18,7 +18,7 @@ export default function VentasList({ ventas, onEliminar }) {
           <div className="item-venta-info">
             <strong>{v.cliente}</strong>
             <ul className="detalle-productos">
-              {v.items.map((it, idx) => (
+              {(v.items ?? []).map((it, idx) => (
                 <li key={idx}>
                   {it.producto} · x{it.cantidad} — ${formatearMoneda(it.precioFinal)}
                 </li>
@@ -26,7 +26,7 @@ export default function VentasList({ ventas, onEliminar }) {
             </ul>
           </div>
           <div className="item-venta-precio">
-            <span>${formatearMoneda(v.total)}</span>
+            <span>${formatearMoneda(v.total ?? 0)}</span>
             <button
               type="button"
               className="boton-eliminar"

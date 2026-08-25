@@ -5,7 +5,7 @@ import { formatearMoneda } from './format'
 
 export function generarPDF(jornada, ventas) {
   const doc = new jsPDF()
-  const total = ventas.reduce((acc, v) => acc + v.total, 0)
+  const total = ventas.reduce((acc, v) => acc + (v.total ?? 0), 0)
 
   doc.setFontSize(16)
   doc.text(NOMBRE_APP, 14, 18)
@@ -21,8 +21,8 @@ export function generarPDF(jornada, ventas) {
     head: [['Cliente', 'Productos', 'Total venta']],
     body: ventas.map((v) => [
       v.cliente,
-      v.items.map((i) => `${i.producto} x${i.cantidad} - $${formatearMoneda(i.precioFinal)}`).join('\n'),
-      `$${formatearMoneda(v.total)}`,
+      (v.items ?? []).map((i) => `${i.producto} x${i.cantidad} - $${formatearMoneda(i.precioFinal)}`).join('\n'),
+      `$${formatearMoneda(v.total ?? 0)}`,
     ]),
     foot: [['', 'TOTAL GENERAL', `$${formatearMoneda(total)}`]],
     theme: 'grid',
