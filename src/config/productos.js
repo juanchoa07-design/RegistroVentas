@@ -1,7 +1,65 @@
-// Catálogo de productos disponibles para vender.
-// Editá esta lista con tus productos reales y volvé a publicar (push a main).
-export const PRODUCTOS = [
-  'Producto 1',
-  'Producto 2',
-  'Producto 3',
+// Catálogo de productos Doña Sol, agrupado por categoría para el selector.
+// Tomado del catálogo del proyecto Do-aSol (admin.html / catalogo.html).
+export const CATEGORIAS_PRODUCTOS = [
+  {
+    categoria: 'Hogar',
+    productos: [
+      'Limpiador Multiuso 5L',
+      'Limpiador Multiuso 10L',
+      'Limpia Vidrios 2L',
+      'Lavandina 10L',
+      'Limpiador Líquido 5L',
+      'Limpiador Líquido 10L',
+      'Limpiador Cremoso 750gr',
+      'Alcohol en Gel 1L',
+      'Alcohol en Gel 5L',
+      'Desodorante Bactericida 10L',
+      'Shampoo para Manos 5L',
+      'Detergente Líquido 10L',
+      'Suavizante 10L',
+      'Jabón p/Lavarropas Dúo 5L',
+      'Jabón p/Lavarropas Dúo 10L',
+      'Cera al Agua 5L',
+      'Desengrasante 5L',
+      'Alcohol Líquido 1L',
+      'Alcohol Líquido 5L',
+      'Alcohol Líquido 10L',
+      'Soda Cáustica 5L',
+      'Soda Cáustica 10L',
+      'Hipoclorito de Sodio 10L',
+      'Perfumador 1/2L',
+      'Perfumador 1L',
+      'Emulsión Neumáticos 5L',
+      'Emulsión Plásticos 5L',
+      'Limpiador Multiuso Cítrico 5L',
+      'Limpiador Multiuso Cítrico 10L',
+      'Esencia Desodorante 2L',
+    ],
+  },
+  {
+    categoria: 'Textil',
+    productos: [
+      'Rejillas (6 unid.)',
+      'Paños de Piso (6 unid.)',
+      'Paños de Piso (25 unid.)',
+      'Franelas (6 unid.)',
+      'Guantes Negros (10 pares)',
+      'Guantes Amarillos (10 pares)',
+    ],
+  },
+  {
+    categoria: 'Papeles',
+    productos: [
+      'Jumbo 200 (funda 6 rollos)',
+      'Toalla Intercalada 20x23 (caja 4800 u.)',
+      'Servilleta de Bocadillo (caja 6000 u.)',
+      'Rollo Cocina 200 Hojas (funda 12 rollos)',
+      'Servilleta de Mesa 30x29,5 (36 paq. x 50)',
+      'Servilletas de Mesa 22x21 (72 paq. x 50)',
+      'Papel Higiénico Doble Hoja (funda 64 rollos x 30m)',
+      'Papel Higiénico Jumbo 500 (funda 8 rollos)',
+    ],
+  },
 ]
+
+export const PRODUCTOS = CATEGORIAS_PRODUCTOS.flatMap((c) => c.productos)

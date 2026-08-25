@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { PRODUCTOS } from '../config/productos'
+import { CATEGORIAS_PRODUCTOS, PRODUCTOS } from '../config/productos'
 
 const vacio = { cliente: '', producto: PRODUCTOS[0] || '', cantidad: 1, precioFinal: '' }
 
@@ -48,10 +48,14 @@ export default function VentaForm({ onAgregar }) {
         <div className="campo">
           <label htmlFor="producto">Producto</label>
           <select id="producto" value={form.producto} onChange={(e) => actualizar('producto', e.target.value)}>
-            {PRODUCTOS.map((p) => (
-              <option key={p} value={p}>
-                {p}
-              </option>
+            {CATEGORIAS_PRODUCTOS.map((cat) => (
+              <optgroup key={cat.categoria} label={cat.categoria}>
+                {cat.productos.map((p) => (
+                  <option key={p} value={p}>
+                    {p}
+                  </option>
+                ))}
+              </optgroup>
             ))}
           </select>
         </div>
