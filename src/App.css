@@ -237,6 +237,16 @@
   color: var(--accent-h);
 }
 
+.texto-error {
+  color: var(--peligro);
+}
+
+.total-jornada-admin {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-h);
+}
+
 .enlace-whatsapp {
   display: inline-block;
   color: var(--accent-h);

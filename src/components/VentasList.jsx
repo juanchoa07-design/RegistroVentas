@@ -5,6 +5,12 @@ export default function VentasList({ ventas, onEliminar }) {
     return <p className="subtexto centrado">Todavía no cargaste ninguna venta.</p>
   }
 
+  function confirmarEliminar(v) {
+    if (window.confirm(`¿Eliminar la venta de ${v.cliente} por $${formatearMoneda(v.total)}? No se puede deshacer.`)) {
+      onEliminar(v.id)
+    }
+  }
+
   return (
     <ul className="lista-ventas">
       {ventas.map((v) => (
@@ -25,7 +31,7 @@ export default function VentasList({ ventas, onEliminar }) {
               type="button"
               className="boton-eliminar"
               aria-label={`Eliminar venta de ${v.cliente}`}
-              onClick={() => onEliminar(v.id)}
+              onClick={() => confirmarEliminar(v)}
             >
               🗑
             </button>
