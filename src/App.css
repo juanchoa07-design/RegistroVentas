@@ -63,6 +63,22 @@
   cursor: not-allowed;
 }
 
+.boton-peligro {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--peligro);
+  background: transparent;
+  color: var(--peligro);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.boton-peligro:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 .fila-campos {
   display: flex;
   gap: 12px;
@@ -232,11 +248,6 @@
   color: var(--text-h);
 }
 
-.mensaje-estado {
-  font-size: 13px;
-  color: var(--accent-h);
-}
-
 .texto-error {
   color: var(--peligro);
 }
@@ -245,14 +256,4 @@
   font-size: 28px;
   font-weight: 700;
   color: var(--text-h);
-}
-
-.enlace-whatsapp {
-  display: inline-block;
-  color: var(--accent-h);
-  font-weight: 600;
-  text-decoration: none;
-  border: 1px solid var(--border);
-  padding: 10px 16px;
-  border-radius: 10px;
 }

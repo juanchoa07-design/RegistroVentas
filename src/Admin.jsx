@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
-import { collection, getDocs, onSnapshot, orderBy, query } from 'firebase/firestore'
+import { collection, doc, getDocs, onSnapshot, orderBy, query, writeBatch } from 'firebase/firestore'
 import './App.css'
 import { authReady, db } from './firebase'
 import { ADMIN_PIN, NOMBRE_APP } from './config/config'
-import { compartirOPescargarPDF, generarPDF, nombreArchivoPDF } from './lib/pdf'
+import { descargarPDF, generarPDF, nombreArchivoPDF } from './lib/pdf'
 import { formatearMoneda } from './lib/format'
 
 const STORAGE_KEY = 'rv_admin_ok'
@@ -14,6 +14,7 @@ export default function Admin() {
   const [error, setError] = useState('')
   const [jornadas, setJornadas] = useState(null)
   const [descargando, setDescargando] = useState(null)
+  const [eliminando, setEliminando] = useState(null)
 
   useEffect(() => {
     if (!autenticado) return
@@ -53,9 +54,27 @@ export default function Admin() {
       const snap = await getDocs(query(collection(db, 'jornadas', jornada.id, 'ventas'), orderBy('creadoEn', 'asc')))
       const ventas = snap.docs.map((d) => ({ id: d.id, ...d.data() }))
       const doc = generarPDF(jornada, ventas)
-      await compartirOPescargarPDF(doc, nombreArchivoPDF(jornada))
+      descargarPDF(doc, nombreArchivoPDF(jornada))
     } finally {
       setDescargando(null)
+    }
+  }
+
+  async function handleEliminar(jornada) {
+    const confirmado = window.confirm(
+      `¿Eliminar para siempre la jornada de ${jornada.nombreReparto || 'reparto sin nombre'} del ${jornada.fecha} (Total $${formatearMoneda(jornada.totalFinal ?? 0)})? No se puede deshacer.`
+    )
+    if (!confirmado) return
+
+    setEliminando(jornada.id)
+    try {
+      const snap = await getDocs(collection(db, 'jornadas', jornada.id, 'ventas'))
+      const batch = writeBatch(db)
+      snap.docs.forEach((d) => batch.delete(d.ref))
+      batch.delete(doc(db, 'jornadas', jornada.id))
+      await batch.commit()
+    } finally {
+      setEliminando(null)
     }
   }
 
@@ -98,14 +117,24 @@ export default function Admin() {
             <h2>{j.nombreReparto || 'Reparto sin nombre'}</h2>
             <p className="subtexto">{j.fecha}</p>
             <p className="total-jornada-admin">${formatearMoneda(j.totalFinal ?? 0)}</p>
-            <button
-              type="button"
-              className="boton-secundario"
-              disabled={descargando === j.id}
-              onClick={() => handleDescargar(j)}
-            >
-              {descargando === j.id ? 'Generando…' : 'Descargar / compartir PDF'}
-            </button>
+            <div className="fila-campos">
+              <button
+                type="button"
+                className="boton-secundario"
+                disabled={descargando === j.id}
+                onClick={() => handleDescargar(j)}
+              >
+                {descargando === j.id ? 'Generando…' : 'Descargar PDF'}
+              </button>
+              <button
+                type="button"
+                className="boton-peligro"
+                disabled={eliminando === j.id}
+                onClick={() => handleEliminar(j)}
+              >
+                {eliminando === j.id ? 'Eliminando…' : 'Eliminar jornada'}
+              </button>
+            </div>
           </div>
         ))}
       </main>

@@ -38,23 +38,6 @@ export function nombreArchivoPDF(jornada) {
   return `ventas_${base}_${jornada.fecha}.pdf`
 }
 
-export async function compartirOPescargarPDF(doc, filename) {
-  try {
-    const blob = doc.output('blob')
-    const file = new File([blob], filename, { type: 'application/pdf' })
-    if (navigator.canShare && navigator.canShare({ files: [file] })) {
-      await navigator.share({
-        files: [file],
-        title: 'Registro de ventas',
-        text: 'Registro de ventas del día',
-      })
-      return 'compartido'
-    }
-  } catch (err) {
-    if (err && err.name === 'AbortError') return 'cancelado'
-    console.error('Error al compartir el PDF:', err)
-  }
-
+export function descargarPDF(doc, filename) {
   doc.save(filename)
-  return 'descargado'
 }

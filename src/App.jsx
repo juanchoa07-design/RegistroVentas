@@ -5,8 +5,6 @@ import VentaForm from './components/VentaForm'
 import VentasList from './components/VentasList'
 import ResumenFinal from './components/ResumenFinal'
 import { useJornada } from './lib/useJornada'
-import { compartirOPescargarPDF, generarPDF, nombreArchivoPDF } from './lib/pdf'
-import { linkWhatsAppImpresion } from './lib/whatsapp'
 import { formatearMoneda } from './lib/format'
 
 export default function App() {
@@ -14,7 +12,6 @@ export default function App() {
     useJornada()
   const [finalizando, setFinalizando] = useState(false)
   const [resumen, setResumen] = useState(null) // { jornada, ventas, total }
-  const [estadoEnvio, setEstadoEnvio] = useState('')
 
   const total = useMemo(() => ventas.reduce((acc, v) => acc + v.total, 0), [ventas])
 
@@ -32,28 +29,13 @@ export default function App() {
       const datosVentas = ventas
       await finalizarJornada(total)
       setResumen({ jornada: datosJornada, ventas: datosVentas, total })
-      await generarYEnviarPDF(datosJornada, datosVentas)
     } finally {
       setFinalizando(false)
     }
   }
 
-  async function generarYEnviarPDF(datosJornada, datosVentas) {
-    const doc = generarPDF(datosJornada, datosVentas)
-    const filename = nombreArchivoPDF(datosJornada)
-    const resultado = await compartirOPescargarPDF(doc, filename)
-    if (resultado === 'compartido') {
-      setEstadoEnvio('PDF compartido correctamente.')
-    } else if (resultado === 'descargado') {
-      setEstadoEnvio('PDF descargado. Tocá el botón de abajo para enviarlo por WhatsApp.')
-    } else {
-      setEstadoEnvio('')
-    }
-  }
-
   function handleNuevaJornada() {
     setResumen(null)
-    setEstadoEnvio('')
     nuevaJornada()
   }
 
@@ -67,26 +49,12 @@ export default function App() {
 
   if (resumen) {
     return (
-      <>
-        <ResumenFinal
-          jornada={resumen.jornada}
-          ventas={resumen.ventas}
-          total={resumen.total}
-          estadoEnvio={estadoEnvio}
-          onReenviar={() => generarYEnviarPDF(resumen.jornada, resumen.ventas)}
-          onNuevaJornada={handleNuevaJornada}
-        />
-        <div className="pantalla-centrada" style={{ paddingTop: 0 }}>
-          <a
-            className="enlace-whatsapp"
-            href={linkWhatsAppImpresion(nombreArchivoPDF(resumen.jornada))}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Abrir WhatsApp para enviar a imprimir
-          </a>
-        </div>
-      </>
+      <ResumenFinal
+        jornada={resumen.jornada}
+        ventas={resumen.ventas}
+        total={resumen.total}
+        onNuevaJornada={handleNuevaJornada}
+      />
     )
   }
 
