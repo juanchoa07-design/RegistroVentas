@@ -1,4 +1,4 @@
-export const NOMBRE_APP = 'Registro de Ventas'
+export const NOMBRE_APP = 'Registro de Ventas · Doña Sol'
 
 // PIN para entrar al panel de administración (ver /?admin=1). Cambialo por
 // uno tuyo antes de compartir el link del panel.

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { collection, doc, getDocs, onSnapshot, orderBy, query, writeBatch } from 'firebase/firestore'
 import './App.css'
 import { authReady, db } from './firebase'
-import { ADMIN_PIN, NOMBRE_APP } from './config/config'
+import { ADMIN_PIN } from './config/config'
 import { descargarPDF, generarPDF, nombreArchivoPDF } from './lib/pdf'
 import { formatearMoneda } from './lib/format'
 
@@ -104,7 +104,7 @@ export default function Admin() {
   return (
     <div className="contenedor-app">
       <header className="encabezado">
-        <h1>{NOMBRE_APP} — Panel</h1>
+        <h1>Panel de ventas</h1>
       </header>
 
       <main className="contenido">
