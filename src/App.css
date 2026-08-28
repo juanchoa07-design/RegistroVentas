@@ -17,7 +17,8 @@
   margin: 0 auto 16px;
 }
 
-.tarjeta > * + * {
+.tarjeta > * + *,
+.tarjeta form > * + * {
   margin-top: 12px;
 }
 
