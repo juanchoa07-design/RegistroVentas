@@ -85,7 +85,7 @@ export default function App() {
 
       <footer className="pie">
         <button type="button" className="boton-finalizar" onClick={handleFinalizar} disabled={finalizando}>
-          {finalizando ? 'Finalizando…' : 'Finalizar ventas'}
+          {finalizando ? 'Finalizando…' : 'Finalizar Jornada'}
         </button>
       </footer>
     </div>
