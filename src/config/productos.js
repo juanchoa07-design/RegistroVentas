@@ -14,6 +14,7 @@ export const CATEGORIAS_PRODUCTOS = [
       'Alcohol en Gel 1L',
       'Alcohol en Gel 5L',
       'Desodorante Bactericida 10L',
+      'Desodorante Económico 10L',
       'Shampoo para Manos 5L',
       'Detergente Líquido 10L',
       'Detergente Grueso 10L',
