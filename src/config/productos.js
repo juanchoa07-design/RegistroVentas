@@ -2,7 +2,7 @@
 // Tomado del catálogo del proyecto Do-aSol (admin.html / catalogo.html).
 export const CATEGORIAS_PRODUCTOS = [
   {
-    categoria: 'Hogar',
+    categoria: 'Industrial',
     productos: [
       'Limpiador Multiuso 5L',
       'Limpiador Multiuso 10L',
@@ -16,7 +16,13 @@ export const CATEGORIAS_PRODUCTOS = [
       'Desodorante Bactericida 10L',
       'Shampoo para Manos 5L',
       'Detergente Líquido 10L',
+      'Detergente Grueso 10L',
+      'Suavizante 5L',
       'Suavizante 10L',
+      'Vinagre 5L',
+      'Vinagre 10L',
+      'Espuma Controlada 5L',
+      'Espuma Controlada 10L',
       'Jabón p/Lavarropas Dúo 5L',
       'Jabón p/Lavarropas Dúo 10L',
       'Cera al Agua 5L',
