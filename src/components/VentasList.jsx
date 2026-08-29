@@ -21,6 +21,7 @@ export default function VentasList({ ventas, onEliminar }) {
               {(v.items ?? []).map((it, idx) => (
                 <li key={idx}>
                   {it.producto} · x{it.cantidad}
+                  {it.precioUnitario != null ? ` · $${formatearMoneda(it.precioUnitario)} c/u` : ''}
                 </li>
               ))}
             </ul>
